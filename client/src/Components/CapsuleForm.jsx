@@ -8,25 +8,58 @@ function CapsuleForm({ token, onCapsuleCreated }) {
   const [media, setMedia] = useState(null);
   const [collaborators, setCollaborators] = useState('');
 
+  // Function to generate SHA-256 hash
+  const generateHash = async (data) => {
+    const encoder = new TextEncoder();
+    const dataBuffer = encoder.encode(data);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create a string of the capsule data for hashing (excluding media file)
+    const capsuleData = JSON.stringify({
+      title,
+      content,
+      releaseDate,
+      collaborators,
+      isPublic: false
+    });
+
+    // Generate hash of the capsule data
+    const capsuleHash = await generateHash(capsuleData);
+
+    // Prepare form data for submission
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
     formData.append('releaseDate', releaseDate);
     formData.append('collaborators', collaborators);
     formData.append('isPublic', false);
+    formData.append('hash', capsuleHash); // Add the hash to the form data
     if (media) formData.append('media', media);
 
-    await axios.post('/api/capsules', formData, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
-    });
-    onCapsuleCreated();
-    setTitle('');
-    setContent('');
-    setReleaseDate('');
-    setMedia(null);
-    setCollaborators('');
+    try {
+      await axios.post('/api/capsules', formData, {
+        headers: { 
+          Authorization: `Bearer ${token}`, 
+          'Content-Type': 'multipart/form-data' 
+        }
+      });
+      onCapsuleCreated();
+      // Reset form fields
+      setTitle('');
+      setContent('');
+      setReleaseDate('');
+      setMedia(null);
+      setCollaborators('');
+    } catch (error) {
+      console.error('Error creating capsule:', error);
+    }
   };
 
   return (
@@ -82,7 +115,6 @@ function CapsuleForm({ token, onCapsuleCreated }) {
       </form>
     </div>
   );
-  
 }
 
 export default CapsuleForm;
