@@ -36,6 +36,7 @@ router.post('/capsules', authenticate, upload.single('media'), async (req, res) 
     releaseDate,
     userId: req.user.id,
     collaborators: collaborators ? collaborators.split(',') : [],
+    hash,
     isPublic
   });
   await capsule.save();
