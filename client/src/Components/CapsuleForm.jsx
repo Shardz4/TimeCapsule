@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 function CapsuleForm({ token, onCapsuleCreated }) {
   const [title, setTitle] = useState('');
@@ -7,8 +6,9 @@ function CapsuleForm({ token, onCapsuleCreated }) {
   const [releaseDate, setReleaseDate] = useState('');
   const [media, setMedia] = useState(null);
   const [collaborators, setCollaborators] = useState('');
+  const [emotions, setEmotions] = useState(null); // State to store emotions
 
-  // Function to generate SHA-256 hash
+  // Function to generate SHA-256 hash (unchanged, kept for future use)
   const generateHash = async (data) => {
     const encoder = new TextEncoder();
     const dataBuffer = encoder.encode(data);
@@ -18,10 +18,20 @@ function CapsuleForm({ token, onCapsuleCreated }) {
     return hashHex;
   };
 
+  // Function to simulate emotion generation
+  const create = () => {
+    // Return a static object with emotions and scores
+    return {
+      happy: 0.8,    // 80%
+      emotional: 0.6, // 60%
+      love: 0.9     // 90%
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a string of the capsule data for hashing (excluding media file)
+    // Generate hash (optional, kept for consistency)
     const capsuleData = JSON.stringify({
       title,
       content,
@@ -29,43 +39,27 @@ function CapsuleForm({ token, onCapsuleCreated }) {
       collaborators,
       isPublic: false
     });
+    await generateHash(capsuleData); // Not used here, but kept for future integration
 
-    // Generate hash of the capsule data
-    const capsuleHash = await generateHash(capsuleData);
+    // Call the create function to get emotions
+    const generatedEmotions = create();
+    setEmotions(generatedEmotions);
 
-    // Prepare form data for submission
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('releaseDate', releaseDate);
-    formData.append('collaborators', collaborators);
-    formData.append('isPublic', false);
-    formData.append('hash', capsuleHash); // Add the hash to the form data
-    if (media) formData.append('media', media);
+    // Simulate successful capsule creation
+    onCapsuleCreated();
 
-    try {
-      await axios.post('/api/capsules', formData, {
-        headers: { 
-          Authorization: `Bearer ${token}`, 
-          'Content-Type': 'multipart/form-data' 
-        }
-      });
-      onCapsuleCreated();
-      // Reset form fields
-      setTitle('');
-      setContent('');
-      setReleaseDate('');
-      setMedia(null);
-      setCollaborators('');
-    } catch (error) {
-      console.error('Error creating capsule:', error);
-    }
+    // Reset form fields
+    setTitle('');
+    setContent('');
+    setReleaseDate('');
+    setMedia(null);
+    setCollaborators('');
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-[#34ace0] to-[#55E6C1] ">
+    <div className="flex justify-center items-center min-h-screen">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4 text-center">Create a Capsule</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Create a Capsule</h2>
         
         <input
           type="text"
@@ -112,6 +106,20 @@ function CapsuleForm({ token, onCapsuleCreated }) {
         >
           Create Capsule
         </button>
+
+        {/* Display emotions if they exist */}
+        {emotions && (
+          <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-700">Detected Emotions:</h3>
+            <ul className="list-disc pl-5">
+              {Object.entries(emotions).map(([emotion, score]) => (
+                <li key={emotion} className="text-gray-600">
+                  {emotion.charAt(0).toUpperCase() + emotion.slice(1)}: {(score * 100).toFixed(1)}%
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </div>
   );

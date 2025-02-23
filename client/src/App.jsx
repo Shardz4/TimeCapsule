@@ -1,15 +1,18 @@
-import React from 'react'
-import { useState } from 'react'
-import Home from './Pages/Home'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router components
+import Home from "./Pages/Home";
+import List from "./Pages/List";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <Home />
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/capsule-list" element={<List />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
