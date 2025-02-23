@@ -61,9 +61,50 @@ Users metadata will be stored in a hash reinforced with SHA 256 algorithm  provi
 - A blockchain wallet (e.g., [MetaMask](https://metamask.io/)) for testing blockchain features
 - Python (v3.8+) for sentiment analysis (optional, see Sentiment Analysis section)
 
-### Installation
+### Installation and Start
 
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/Shardz4/TimeCapsule.git
    cd TimeCapsule
+   npm i
+   npm run dev
+   npm start
+### Repositarty Structure
+  TimeCapsule/
+├── client/
+
+│   ├── public/
+
+│   │   ├── index.html
+
+│   │   └── ...
+│   ├── src/
+│   │   ├── components/
+
+│   │   ├── pages/
+
+
+│   │   ├── App.js
+│   │   └── ...
+
+│   ├── package.json
+│   └── ...
+
+├── server/
+
+│   ├── controllers/
+
+│   ├── models/
+
+│   ├── routes/
+
+│   ├── app.js
+
+│   ├── package.json
+│   └── ...
+
+├── .gitattributes
+
+└── README.md
+
