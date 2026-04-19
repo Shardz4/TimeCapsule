@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#4af8e3",
+                        "surface-container-lowest": "#000000",
+                        "error-dim": "#d73357",
+                        "surface-variant": "#24233b",
+                        "on-surface": "#e6e3fb",
+                        "secondary-dim": "#33e9d5",
+                        "inverse-primary": "#7744b5",
+                        "background": "#0c0c1d",
+                        "surface-dim": "#0c0c1d",
+                        "tertiary": "#ff6d8b",
+                        "on-tertiary-fixed-variant": "#77002b",
+                        "on-primary-container": "#340064",
+                        "on-error": "#490013",
+                        "on-background": "#e6e3fb",
+                        "surface": "#0c0c1d",
+                        "primary": "#c799ff",
+                        "secondary-fixed-dim": "#33e9d5",
+                        "inverse-surface": "#fcf8ff",
+                        "primary-dim": "#ba85fb",
+                        "error-container": "#a70138",
+                        "error": "#ff6e84",
+                        "tertiary-fixed": "#ff8fa3",
+                        "secondary-container": "#006a60",
+                        "surface-container-low": "#121223",
+                        "surface-container": "#18182b",
+                        "on-tertiary-container": "#000000",
+                        "surface-tint": "#c799ff",
+                        "outline-variant": "#474659",
+                        "on-secondary": "#005b51",
+                        "on-secondary-fixed": "#00463f",
+                        "on-primary-fixed": "#000000",
+                        "on-surface-variant": "#aba9bf",
+                        "on-tertiary": "#480017",
+                        "surface-container-high": "#1d1d33",
+                        "on-tertiary-fixed": "#390010",
+                        "on-primary-fixed-variant": "#40007a",
+                        "surface-container-highest": "#24233b",
+                        "outline": "#757388",
+                        "surface-bright": "#2a2a43",
+                        "secondary-fixed": "#4af8e3",
+                        "tertiary-fixed-dim": "#ff7792",
+                        "on-error-container": "#ffb2b9",
+                        "inverse-on-surface": "#545366",
+                        "primary-fixed-dim": "#af7aef",
+                        "tertiary-dim": "#e6005b",
+                        "primary-container": "#bc87fe",
+                        "on-primary": "#440080",
+                        "on-secondary-container": "#dcfff8",
+                        "on-secondary-fixed-variant": "#00655b",
+                        "primary-fixed": "#bc87fe",
+                        "tertiary-container": "#fe0065"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(36, 35, 59, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        body {
+            background: radial-gradient(circle at top right, #1d1d33, #0c0c1d 60%);
+            min-height: 100vh;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8) sepia(100%) saturate(200%) hue-rotate(220deg);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="font-body text-on-background selection:bg-primary/30">
+<!-- Top Navigation Anchor (Transactional Style - No Shell) -->
+<header class="sticky top-0 w-full z-50 bg-[#0c0c1d]/60 backdrop-blur-[20px] flex justify-between items-center px-6 py-6 lg:px-12">
+<div class="flex items-center gap-4">
+<a class="group flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+<span class="font-label text-sm tracking-widest uppercase">Back to Feed</span>
+</a>
+</div>
+<div class="font-headline text-2xl font-bold tracking-tighter text-on-surface">
+            Neo-Vault
+        </div>
+<div class="w-24 flex justify-end">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">account_circle</span>
+</div>
+</header>
+<main class="relative px-6 py-12 flex flex-col items-center justify-center min-h-[calc(100vh-88px)]">
+<!-- Ambient Glow Decorations -->
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- The Central Creation Card -->
+<div class="glass-panel w-full max-w-2xl p-8 md:p-12 rounded-[2rem] border border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] relative overflow-hidden">
+<!-- Card Header -->
+<div class="mb-12">
+<div class="flex items-center gap-3 mb-2">
+<span class="h-[2px] w-8 bg-secondary shadow-[0_0_8px_rgba(74,248,227,0.5)]"></span>
+<span class="font-label text-xs uppercase tracking-[0.2em] text-secondary">New Transmission</span>
+</div>
+<h1 class="font-headline text-5xl font-bold tracking-tight text-on-surface leading-none">Create Capsule</h1>
+<p class="mt-4 text-on-surface-variant text-lg max-w-md">Preserve your presence across the digital timeline.</p>
+</div>
+<!-- Form Content -->
+<form class="space-y-10">
+<!-- Title Field -->
+<div class="group relative">
+<label class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-3 group-focus-within:text-primary transition-colors" for="capsule-title">Capsule Title</label>
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 text-xl font-headline transition-all placeholder:text-outline outline-none" id="capsule-title" placeholder="A Name for This Moment" type="text"/>
+</div>
+<!-- Memory Content Field -->
+<div class="group relative">
+<label class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-3 group-focus-within:text-primary transition-colors" for="memory-content">Capsule Memory Content</label>
+<textarea class="w-full bg-surface-container-low/50 border border-outline-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 rounded-xl px-4 py-3 text-on-surface transition-all placeholder:text-outline outline-none resize-none" id="memory-content" placeholder="Log your thoughts, memories, or directives for the future..." rows="4"></textarea>
+</div>
+<!-- Dual Column Layout for Date and Collaborators -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Release Date -->
+<div class="group">
+<label class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-3 group-focus-within:text-primary transition-colors" for="release-date">Release Date</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low/50 border border-outline-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 rounded-xl px-4 py-3 text-on-surface transition-all outline-none" id="release-date" type="date"/>
+</div>
+</div>
+<!-- Collaborators -->
+<div class="group">
+<label class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-3 group-focus-within:text-primary transition-colors" for="collaborators">Collaborators/Emails</label>
+<input class="w-full bg-surface-container-low/50 border border-outline-variant/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 rounded-xl px-4 py-3 text-on-surface transition-all placeholder:text-outline outline-none" id="collaborators" placeholder="Separate with commas" type="text"/>
+</div>
+</div>
+<!-- Media Upload and Toggle Area -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-4">
+<!-- Upload Button -->
+<button class="flex items-center gap-3 bg-surface-variant/40 hover:bg-surface-variant/60 border border-primary/20 text-on-surface px-6 py-3 rounded-full transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">upload_file</span>
+<span class="font-label text-sm uppercase tracking-wider">Upload File/Media</span>
+</button>
+<!-- Public Toggle -->
+<div class="flex items-center gap-4">
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Make Public</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-8">
+<button class="w-full py-5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline text-lg font-bold uppercase tracking-[0.25em] shadow-[0_10px_30px_rgba(188,135,254,0.3)] hover:shadow-[0_15px_40px_rgba(188,135,254,0.4)] transition-all active:scale-[0.98] flex items-center justify-center gap-3" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+                        Seal Capsule
+                    </button>
+<p class="text-center mt-4 text-[10px] uppercase tracking-widest text-on-surface-variant/60">Verification sequence required upon sealing</p>
+</div>
+</form>
+<!-- Decorative Visual Node (Timeline concept) -->
+<div class="absolute -right-4 top-1/2 -translate-y-1/2 h-64 w-[1px] bg-gradient-to-b from-transparent via-primary/40 to-transparent flex flex-col items-center justify-center gap-12 pointer-events-none hidden lg:flex">
+<div class="w-3 h-3 rounded-full bg-secondary shadow-[0_0_12px_#4af8e3]"></div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<!-- Footer / Identity -->
+<footer class="mt-12 opacity-40 hover:opacity-100 transition-opacity flex items-center gap-4">
+<div class="h-[1px] w-12 bg-on-surface-variant/30"></div>
+<div class="text-[10px] font-label uppercase tracking-widest">Ethereal Archive Protocol v4.0.2</div>
+<div class="h-[1px] w-12 bg-on-surface-variant/30"></div>
+</footer>
+</main>
+<!-- Side Decoration (Editorial Asymmetry) -->
+<div class="fixed right-12 bottom-24 hidden xl:block pointer-events-none transform rotate-90 origin-right">
+<span class="font-headline text-8xl font-extrabold text-white/[0.02] select-none">ARCHIVE</span>
+</div>
+</body></html>

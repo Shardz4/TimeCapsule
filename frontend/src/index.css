@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { font-family: 'Manrope', sans-serif; background-color: #0c0c1d; }
+.headline-font { font-family: 'Space Grotesk', sans-serif; }
+.glass-card {
+    background: rgba(36, 35, 59, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(199, 153, 255, 0.15);
+}
+.glow-overlay {
+    background: radial-gradient(circle at 50% 50%, rgba(98, 0, 238, 0.15) 0%, transparent 70%);
+}
+.gradient-border-mask {
+    position: relative;
+    border-radius: 0.75rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(199, 153, 255, 0.5), rgba(74, 248, 227, 0.2), transparent);
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TimeCapsule - The Ethereal Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#474659",
+                        "outline": "#757388",
+                        "error-container": "#a70138",
+                        "primary-fixed": "#bc87fe",
+                        "on-tertiary": "#480017",
+                        "secondary-container": "#006a60",
+                        "secondary-dim": "#33e9d5",
+                        "on-secondary-container": "#dcfff8",
+                        "on-primary-fixed": "#000000",
+                        "primary": "#c799ff",
+                        "primary-container": "#bc87fe",
+                        "on-surface-variant": "#aba9bf",
+                        "on-secondary-fixed-variant": "#00655b",
+                        "error-dim": "#d73357",
+                        "inverse-surface": "#fcf8ff",
+                        "on-secondary-fixed": "#00463f",
+                        "error": "#ff6e84",
+                        "secondary-fixed-dim": "#33e9d5",
+                        "on-tertiary-container": "#000000",
+                        "tertiary-fixed-dim": "#ff7792",
+                        "surface-container-lowest": "#000000",
+                        "primary-fixed-dim": "#af7aef",
+                        "on-tertiary-fixed": "#390010",
+                        "on-error": "#490013",
+                        "surface-container-high": "#1d1d33",
+                        "inverse-on-surface": "#545366",
+                        "surface-bright": "#2a2a43",
+                        "surface": "#0c0c1d",
+                        "surface-tint": "#c799ff",
+                        "surface-dim": "#0c0c1d",
+                        "tertiary": "#ff6d8b",
+                        "tertiary-container": "#fe0065",
+                        "inverse-primary": "#7744b5",
+                        "secondary-fixed": "#4af8e3",
+                        "surface-container": "#18182b",
+                        "primary-dim": "#ba85fb",
+                        "secondary": "#4af8e3",
+                        "on-primary-container": "#340064",
+                        "on-secondary": "#005b51",
+                        "on-primary": "#440080",
+                        "on-primary-fixed-variant": "#40007a",
+                        "surface-variant": "#24233b",
+                        "on-tertiary-fixed-variant": "#77002b",
+                        "tertiary-dim": "#e6005b",
+                        "surface-container-low": "#121223",
+                        "on-error-container": "#ffb2b9",
+                        "tertiary-fixed": "#ff8fa3",
+                        "on-background": "#e6e3fb",
+                        "background": "#0c0c1d",
+                        "on-surface": "#e6e3fb",
+                        "surface-container-highest": "#24233b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #0c0c1d; }
+        .headline-font { font-family: 'Space Grotesk', sans-serif; }
+        .glass-card {
+            background: rgba(36, 35, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(199, 153, 255, 0.15);
+        }
+        .glow-overlay {
+            background: radial-gradient(circle at 50% 50%, rgba(98, 0, 238, 0.15) 0%, transparent 70%);
+        }
+        .gradient-border-mask {
+            position: relative;
+            border-radius: 0.75rem;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(199, 153, 255, 0.5), rgba(74, 248, 227, 0.2), transparent);
+        }
+    </style>
+</head>
+<body class="text-on-background selection:bg-primary/30 selection:text-primary min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0c0c1d]/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(98,0,238,0.1)]">
+<div class="flex justify-between items-center px-8 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-[#6200EE] font-[Space_Grotesk]">TimeCapsule</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#6200EE] border-b-2 border-[#6200EE] pb-1 headline-font text-sm font-medium tracking-wide" href="#">Vault</a>
+<a class="text-[#4af8e3]/60 hover:text-[#4af8e3] transition-colors duration-300 headline-font text-sm font-medium tracking-wide" href="#">Echoes</a>
+<a class="text-[#4af8e3]/60 hover:text-[#4af8e3] transition-colors duration-300 headline-font text-sm font-medium tracking-wide" href="#">World Map</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold py-2.5 px-6 rounded-full shadow-[0_0_20px_rgba(188,135,254,0.3)] hover:scale-95 duration-200 ease-in-out flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+                    Create New Capsule
+                </button>
+<div class="hidden md:flex items-center text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 px-6 max-w-7xl mx-auto relative">
+<!-- Background Ambient Glows -->
+<div class="fixed top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/10 blur-[120px] pointer-events-none rounded-full"></div>
+<div class="fixed bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-secondary/5 blur-[150px] pointer-events-none rounded-full"></div>
+<!-- Hero Section / Title -->
+<div class="mb-16 space-y-2">
+<div class="flex items-center gap-3 mb-4">
+<span class="h-[1px] w-12 bg-secondary"></span>
+<span class="font-headline text-secondary text-sm font-bold uppercase tracking-[0.2em]">Public Archive</span>
+</div>
+<h1 class="headline-font text-5xl md:text-7xl font-bold tracking-tight text-white max-w-3xl leading-[1.1]">
+                Preserve your <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">digital legacy</span> for the future.
+            </h1>
+</div>
+<!-- Bento Feed Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-24">
+<!-- Featured Capsule (Double Width) -->
+<div class="md:col-span-8 group">
+<div class="gradient-border-mask h-full">
+<div class="glass-card h-full rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-6">
+<img class="w-10 h-10 rounded-full border border-primary/30" data-alt="professional portrait of a creative director in soft cinematic lighting with dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVti70Z1X2eG-96qrPdTFzbx0lnCej_rcGBajM16beEW1eAvZ1qqbGEmoMRi3lZLx5zcBH29SQZ30kljagPzyrWMKCw64aP3oCOB08QO5ww-eALFBBEkkLtLxgFkWny6KCd1qiqC9E1OVUHOZqmf5_RJ-1IMEWWonT4sZi8nW4dPzYZtzfJ6hHoGmhbRp_oSZhyejqZxcYxVZFuTqzuDmeD2Te0nowxsfI9lH2VFJ2TwrOV7SCVNwA7prCqqGXiiT-Uv0Z5AgoFgjr"/>
+<span class="font-body text-on-surface-variant text-sm">@elara_vox</span>
+</div>
+<h2 class="headline-font text-3xl md:text-4xl font-bold text-white mb-4">The Last Rain of 2024</h2>
+<p class="font-body text-on-surface-variant text-lg max-w-xl leading-relaxed">
+                                A high-fidelity soundscape of the final storm of the year, recorded on a vintage reel-to-reel in the heart of Tokyo...
+                            </p>
+</div>
+<div class="mt-12 flex items-end justify-between">
+<div class="space-y-1">
+<span class="block font-headline text-[10px] uppercase tracking-widest text-secondary font-bold">Release Sequence</span>
+<span class="text-2xl font-bold text-white headline-font tracking-tight">Unlocks in 12 Years</span>
+</div>
+<button class="bg-surface-variant/40 hover:bg-surface-variant/60 p-4 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined text-primary">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Small Capsule -->
+<div class="md:col-span-4 group">
+<div class="gradient-border-mask h-full">
+<div class="glass-card h-full rounded-xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-sm text-tertiary">lock</span>
+<span class="font-headline text-[10px] uppercase tracking-widest text-tertiary font-bold">Sealed Archive</span>
+</div>
+<h3 class="headline-font text-xl font-bold text-white mb-2">Neon City Sketches</h3>
+<p class="font-body text-on-surface-variant text-sm line-clamp-3">
+                                A collection of hand-drawn digital architectural plans for the floating districts of 2050...
+                            </p>
+</div>
+<div class="mt-8">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded-full bg-secondary-container"></div>
+<span class="text-xs text-on-surface-variant">by Julian Thorne</span>
+</div>
+<div class="bg-surface-container-highest/40 rounded-lg p-3">
+<span class="text-sm font-bold text-secondary headline-font">Unlocks in 5 Years</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Regular Grid Items -->
+<div class="md:col-span-4 group">
+<div class="gradient-border-mask h-full">
+<div class="glass-card h-full rounded-xl p-6 flex flex-col">
+<div class="mb-6 h-48 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="vibrant satellite view of earth at night with electric blue lighting and atmosphere glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPCLh5efryvtvOzBi2atWDtAQI203H9GCjI4l7pi7o2c6VhoI5URbVxKmk65GEdZLyZOKHlnI918rXmeQDm5NR-_4e98vS5CNcQ7Vb8afIUPBfZpdx5d7KzqxSMHk8BEtyfpKklmyTs2fDpfd4yn-zqkBdc36QiW3i5UK4T0OAiaxYd6bLjtDD540pHD9p_0tTiaIlNUXfZaskhUQlWchZmF8EFJQShLB3e7KQr02k-jUFQE3YijeigJZorwZPC_XD7gj_K5-KC76G"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+</div>
+<h3 class="headline-font text-xl font-bold text-white mb-2">Space Odyssey logs</h3>
+<p class="font-body text-on-surface-variant text-sm mb-6 flex-grow">Daily journals from the Mars One initial training simulation...</p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<span class="text-xs font-bold text-primary headline-font">8 Years Left</span>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">share</span>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 group">
+<div class="gradient-border-mask h-full">
+<div class="glass-card h-full rounded-xl p-6 flex flex-col">
+<div class="mb-6 h-48 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="minimalist glass sculpture reflecting multiple prismatic colors in a dark environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAku_0lol3dHt80Xu8hEoMSZVOlEXzHkbbfQamF6_3p_UbrTYCV4VBV5-EtfG7LD4TAMgyS_P_jBN8idV3fv-BQdK_au-WDwfpqOc8sA4CcSZR-HoZzEd7jz_ze_z9-b2TFxYPNUgZlj-D-KNne5wiJss6jZYMfoWEQXPth1HmrY97BE_HRqUZh1aDDaXGm8guOFQkdGnYm2m7wXE-sglGK0h0lxoMC1HFvFtNnuJW42gZjWDmaRtFPGGDoHKMWOXMg-vtXOnbndfd"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+</div>
+<h3 class="headline-font text-xl font-bold text-white mb-2">Ancestral Voices</h3>
+<p class="font-body text-on-surface-variant text-sm mb-6 flex-grow">AI-upscaled voice notes from my grandparents recorded in 1992...</p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<span class="text-xs font-bold text-primary headline-font">25 Years Left</span>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">share</span>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 group">
+<div class="gradient-border-mask h-full">
+<div class="glass-card h-full rounded-xl p-6 flex flex-col">
+<div class="mb-6 h-48 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="high fashion macro shot of iridescent fabric with metallic purple and teal threads" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQvpxryTdTUflZ1MIVOi7i2HlUdJQuzpgJJ8wqedksw9mLY-Uhl9kIVX3a3-iVLZkkcWtzeywsaFygbA5SKbdZ3HzfuHBE12Fn1M_-MSr5BYOseNQ8OSmEzJw5dC69u4_qvf3BCc9csbRGtRg5RYzAN-QbDJ2HM7wUejS58m_WwpVWObyaiV7po_QTa9LZWy3Jdt1EG5X2Dzo_YbGwVfLrQfsq7n6TdwbJTqZ7HZWhvFiiWifxFgrpJrxdMLQAvpCdtCMArBoXfraK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+</div>
+<h3 class="headline-font text-xl font-bold text-white mb-2">Memories of 2024</h3>
+<p class="font-body text-on-surface-variant text-sm mb-6 flex-grow">A collective digital diary of our first summer in the new house...</p>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<span class="text-xs font-bold text-primary headline-font">10 Years Left</span>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">share</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0c0c1d]/40 backdrop-blur-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center bg-[#6200EE]/20 text-[#4af8e3] rounded-full p-3 shadow-[0_0_15px_rgba(74,248,227,0.3)] scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-[Manrope] mt-1">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 p-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-[Manrope] mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 p-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-[Manrope] mt-1">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 p-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-[Manrope] mt-1">Echoes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 p-2 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-[Manrope] mt-1">Settings</span>
+</a>
+</nav>
+</body></html>
