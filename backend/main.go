@@ -26,8 +26,10 @@ type Capsule struct {
 
 func initDB() {
 	var err error
-	// Connection string according to the docker container created
-	connStr := "user=postgres password=postgres dbname=capsules sslmode=disable host=localhost"
+	connStr := os.Getenv("DATABASE_URL")
+	if connStr == "" {
+		connStr = "user=postgres password=postgres dbname=capsules sslmode=disable host=localhost"
+	}
 	db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
