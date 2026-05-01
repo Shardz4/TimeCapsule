@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const API = 'http://localhost:8080';
 
 function CreateCapsule() {
   const [formData, setFormData] = useState({
@@ -9,29 +11,97 @@ function CreateCapsule() {
     collaborators: '',
     isPublic: true
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleImageSelect = (file) => {
+    if (!file) return;
+    const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      alert('Please select a JPG, PNG, GIF, or WebP image.');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image must be under 10MB.');
+      return;
+    }
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onload = (e) => setImagePreview(e.target.result);
+    reader.readAsDataURL(file);
+  };
 
-    fetch('http://localhost:8080/api/capsules', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ...formData,
-        isPublic: Boolean(formData.isPublic)
-      })
-    })
-      .then(res => {
-        if(res.ok) {
-           navigate('/');
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    handleImageSelect(file);
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsUploading(true);
+
+    try {
+      let imageUrl = '';
+
+      // Step 1: Upload image if present
+      if (imageFile) {
+        const uploadData = new FormData();
+        uploadData.append('image', imageFile);
+        const uploadRes = await fetch(`${API}/api/upload`, {
+          method: 'POST',
+          body: uploadData,
+        });
+        if (uploadRes.ok) {
+          const uploadJson = await uploadRes.json();
+          imageUrl = uploadJson.imageUrl;
         } else {
-           console.error("Failed to create capsule");
+          console.error('Image upload failed');
         }
-      })
-      .catch(err => console.error(err));
+      }
+
+      // Step 2: Create capsule
+      const res = await fetch(`${API}/api/capsules`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          isPublic: Boolean(formData.isPublic),
+          imageUrl: imageUrl,
+        }),
+      });
+
+      if (res.ok) {
+        navigate('/');
+      } else {
+        console.error('Failed to create capsule');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -60,6 +130,73 @@ function CreateCapsule() {
                             className="w-full bg-transparent border-0 border-b border-outline-variant/30 text-white font-body text-2xl focus:ring-0 focus:border-secondary transition-colors placeholder:text-on-surface-variant/50 px-0 pb-2"
                             value={formData.title}
                             onChange={(e) => setFormData({...formData, title: e.target.value})}
+                        />
+                    </div>
+
+                    {/* Image Upload Zone */}
+                    <div className="space-y-3 pl-4 border-l-2 border-primary/30 transition-colors">
+                        <label className="block headline-font text-xs font-bold uppercase tracking-[0.15em] text-primary">Attach Memory</label>
+                        
+                        {imagePreview ? (
+                          <div className="relative rounded-xl overflow-hidden group">
+                            <img
+                              src={imagePreview}
+                              alt="Preview"
+                              className="w-full max-h-72 object-cover rounded-xl"
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <button
+                                type="button"
+                                onClick={removeImage}
+                                className="bg-error/80 hover:bg-error text-white rounded-full p-3 transition-all hover:scale-110 shadow-lg"
+                              >
+                                <span className="material-symbols-outlined">delete</span>
+                              </button>
+                            </div>
+                            <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2">
+                              <span className="material-symbols-outlined text-secondary text-sm">check_circle</span>
+                              <span className="text-xs text-white font-body">{imageFile?.name}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            onClick={() => fileInputRef.current?.click()}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-300 p-8 text-center ${
+                              isDragging
+                                ? 'border-secondary bg-secondary/10 scale-[1.02]'
+                                : 'border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5'
+                            }`}
+                          >
+                            <div className="flex flex-col items-center gap-3">
+                              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                                isDragging
+                                  ? 'bg-secondary/20 text-secondary scale-110'
+                                  : 'bg-primary/10 text-primary'
+                              }`}>
+                                <span className="material-symbols-outlined text-3xl">
+                                  {isDragging ? 'download' : 'add_photo_alternate'}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="font-body text-white text-sm font-medium">
+                                  {isDragging ? 'Drop your image here' : 'Drag & drop an image, or click to browse'}
+                                </p>
+                                <p className="font-body text-on-surface-variant text-xs mt-1">
+                                  JPG, PNG, GIF, WebP • Max 10MB
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/jpeg,image/png,image/gif,image/webp"
+                          className="hidden"
+                          onChange={(e) => handleImageSelect(e.target.files[0])}
                         />
                     </div>
 
@@ -109,9 +246,24 @@ function CreateCapsule() {
                             />
                             <span className="font-body text-on-surface-variant text-sm">Add to Global Echoes (Public)</span>
                         </label>
-                        <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary text-on-primary-fixed font-headline font-bold py-4 px-12 rounded-full shadow-[0_0_30px_rgba(188,135,254,0.4)] hover:shadow-[0_0_40px_rgba(74,248,227,0.5)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
-                            <span className="material-symbols-outlined">lock</span>
-                            Seal Capsule
+                        <button
+                          type="submit"
+                          disabled={isUploading}
+                          className={`w-full md:w-auto bg-gradient-to-r from-primary to-secondary text-on-primary-fixed font-headline font-bold py-4 px-12 rounded-full shadow-[0_0_30px_rgba(188,135,254,0.4)] hover:shadow-[0_0_40px_rgba(74,248,227,0.5)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 ${
+                            isUploading ? 'opacity-60 cursor-not-allowed' : ''
+                          }`}
+                        >
+                            {isUploading ? (
+                              <>
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                Sealing...
+                              </>
+                            ) : (
+                              <>
+                                <span className="material-symbols-outlined">lock</span>
+                                Seal Capsule
+                              </>
+                            )}
                         </button>
                     </div>
 

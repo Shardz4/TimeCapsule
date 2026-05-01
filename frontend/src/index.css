@@ -18,3 +18,17 @@ body { font-family: 'Manrope', sans-serif; background-color: #0c0c1d; }
     padding: 1px;
     background: linear-gradient(135deg, rgba(199, 153, 255, 0.5), rgba(74, 248, 227, 0.2), transparent);
 }
+
+@keyframes echoCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.echo-card-enter {
+    animation: echoCardEnter 0.5s ease-out both;
+}
